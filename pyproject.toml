@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "nbme_score_clinical_patient_notes"
+version = "0.1.0"
+description = ""
+authors = ["Shinichiro Saito <52438398+sinchir0@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "3.9.4"
+kaggle = "^1.5.12"
+ipykernel = "^6.9.1" 
+pandas = "^1.4.1"
+matplotlib = "^3.5.1"
+torch = "^1.11.0"
+ipython = "^8.1.1"
+tokenizers = "^0.12.0"
+transformers = "^4.18.0"
+scikit-learn = "^1.0.2"
+
+[tool.poetry.dev-dependencies]
+wandb = "^0.12.14"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+black = "^22.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
