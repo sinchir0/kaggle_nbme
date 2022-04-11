@@ -82,3 +82,8 @@ def create_labels_for_scoring(df):
                 truth.append([start, end])
         truths.append(truth)
     return truths
+
+
+def get_score(y_true, y_pred):
+    score = span_micro_f1(y_true, y_pred)
+    return score
