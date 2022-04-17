@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_predictions(results):
     predictions = []
     for result in results:

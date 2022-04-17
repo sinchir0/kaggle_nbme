@@ -1,7 +1,7 @@
 class CFG:
     debug = True
     wandb = False
-    competition = "NBME"
+    competition = "nbme"
     _wandb_kernel = "sinchir0"
     apex = True
     print_freq = 100
