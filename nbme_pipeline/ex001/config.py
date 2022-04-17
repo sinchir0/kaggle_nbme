@@ -5,7 +5,7 @@ class CFG:
     _wandb_kernel = "sinchir0"
     apex = True
     print_freq = 100
-    num_workers = 4
+    num_workers = 0  # 4 # 1か４にすると、AttributeError: type object 'CFG' has no attribute 'tokenizer'が発生する
     model = "microsoft/deberta-base"
     scheduler = "cosine"  # ['linear', 'cosine']
     batch_scheduler = True

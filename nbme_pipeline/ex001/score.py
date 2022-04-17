@@ -1,5 +1,51 @@
+import ast
+import itertools
+
 import numpy as np
+import pandas as pd
 from sklearn.metrics import f1_score
+
+from pred import get_predictions
+
+
+def get_char_probs(texts, predictions, tokenizer):
+    results = [np.zeros(len(t)) for t in texts]
+    for i, (text, prediction) in enumerate(zip(texts, predictions)):
+        encoded = tokenizer(text, add_special_tokens=True, return_offsets_mapping=True)
+        for idx, (offset_mapping, pred) in enumerate(
+            zip(encoded["offset_mapping"], prediction)
+        ):
+            start = offset_mapping[0]
+            end = offset_mapping[1]
+            results[i][start:end] = pred
+    return results
+
+
+def get_result(oof_df: pd.DataFrame, max_len: int, tokenizer, logger) -> None:
+    """Save prediction result by logger"""
+    labels = create_labels_for_scoring(oof_df)
+    predictions = oof_df[[i for i in range(max_len)]].values
+    char_probs = get_char_probs(oof_df["pn_history"].values, predictions, tokenizer)
+    results = get_results(char_probs, th=0.5)
+    preds = get_predictions(results)
+    score = get_score(labels, preds)
+    logger.info(f"Score: {score:<.4f}")
+
+
+def get_results(char_probs, th=0.5):
+    results = []
+    for char_prob in char_probs:
+        result = np.where(char_prob >= th)[0] + 1
+        result = [
+            list(g)
+            for _, g in itertools.groupby(
+                result, key=lambda n, c=itertools.count(): n - next(c)
+            )
+        ]
+        result = [f"{min(r)} {max(r)}" for r in result]
+        result = ";".join(result)
+        results.append(result)
+    return results
 
 
 def micro_f1(preds: list[int], truths: list[int]) -> float:
