@@ -1,9 +1,10 @@
 import os
 import platform
 from pathlib import Path
+from typing import Tuple
 
 
-def classify_env(competiton_name: str) -> tuple[Path, Path, Path]:
+def classify_env(competiton_name: str) -> Tuple[Path, Path, Path]:
     # Colab
     if "COLAB_GPU" in set(os.environ.keys()):
         DATA_DIR = Path("content", "drive", "MyDrive", "Kaggle", competiton_name, "input")

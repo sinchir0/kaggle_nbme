@@ -1,5 +1,6 @@
 import ast
 import itertools
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -40,7 +41,7 @@ def get_results(char_probs, th=0.5):
     return results
 
 
-def micro_f1(preds: list[int], truths: list[int]) -> float:
+def micro_f1(preds: List[int], truths: List[int]) -> float:
     # From https://www.kaggle.com/theoviel/evaluation-metric-folds-baseline
     """
     Micro f1 on binary arrays.
@@ -58,7 +59,7 @@ def micro_f1(preds: list[int], truths: list[int]) -> float:
     return f1_score(truths, preds)
 
 
-def spans_to_binary(spans: list[int], length=None) -> np.ndarray:
+def spans_to_binary(spans: List[int], length=None) -> np.ndarray:
     """
     Converts spans to a binary array indicating whether each character is in the span.
 
