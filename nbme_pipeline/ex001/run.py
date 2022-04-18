@@ -21,7 +21,9 @@ from transformers import AutoTokenizer
 if __name__ == "__main__":
 
     # Directory Setting
-    CFG._data_dir, CFG._output_dir, CFG._model_dir = classify_env(competiton_name=CFG.competition)
+    CFG._data_dir, CFG._output_dir, CFG._model_dir = classify_env(
+        competiton_name=CFG.competition, exp_name=CFG.exp_name
+    )
 
     if not os.path.exists(CFG._model_dir):
         os.makedirs(CFG._output_dir)

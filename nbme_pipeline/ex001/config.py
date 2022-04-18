@@ -1,4 +1,8 @@
+from pathlib import Path
+
+
 class CFG:
+    exp_name = Path(__file__).parents[0].parts[-1]
     debug = True
     wandb = False
     competition = "nbme"
