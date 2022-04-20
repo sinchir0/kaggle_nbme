@@ -16,12 +16,17 @@ numpy = "1.21.6"
 torch = "1.10.0"
 tf-estimator-nightly = "2.8.0.dev2021122109"
 Markdown = "3.0"
+requests = "2.23.0"
+six = "1.15.0"
+click = "<8.0"
+folium = "0.2.1"
+imgaug = "<0.2.7"
 
 [tool.poetry.dev-dependencies]
 wandb = "^0.12.14"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
-black = "^22.3.0"
+black = "<=19.10b0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
