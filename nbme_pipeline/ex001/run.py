@@ -26,7 +26,10 @@ if __name__ == "__main__":
     )
 
     if not os.path.exists(CFG._model_dir):
-        os.makedirs(CFG._output_dir)
+        os.makedirs(CFG._output_dir, exist_ok=True)
+
+    if not os.path.exists(CFG._model_dir / "output_model"):
+        os.makedirs(CFG._output_dir / "output_model", exist_ok=True)
 
     # dubug
     if CFG.debug:
@@ -88,28 +91,18 @@ if __name__ == "__main__":
         oof_df = pd.DataFrame()
         for fold in range(CFG.n_fold):
             if fold in CFG.trn_fold:
-                _oof_df = train_loop(
-                    folds=train,
-                    fold=fold,
-                    CFG=CFG,
-                )
+                _oof_df = train_loop(folds=train, fold=fold, CFG=CFG,)
                 oof_df = pd.concat([oof_df, _oof_df])
                 # Save fold result
                 CFG._logger.info(f"========== fold: {fold} result ==========")
                 get_result(
-                    oof_df=_oof_df,
-                    max_len=CFG.max_len,
-                    tokenizer=CFG.tokenizer,
-                    logger=CFG._logger,
+                    oof_df=_oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG._logger,
                 )
         # Save CV result
         oof_df = oof_df.reset_index(drop=True)
         CFG._logger.info("========== CV ==========")
         get_result(
-            oof_df=oof_df,
-            max_len=CFG.max_len,
-            tokenizer=CFG.tokenizer,
-            logger=CFG._logger,
+            oof_df=oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG._logger,
         )
         oof_df.to_pickle(CFG._output_dir / "oof_df.pkl")
 

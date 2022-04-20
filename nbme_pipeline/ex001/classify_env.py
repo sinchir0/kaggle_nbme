@@ -7,7 +7,7 @@ from typing import Tuple
 def classify_env(competiton_name: str, exp_name: str) -> Tuple[Path, Path, Path]:
     # Colab
     if "COLAB_GPU" in set(os.environ.keys()):
-        DATA_DIR = Path("content", "drive", "MyDrive", "Kaggle", competiton_name, "input")
+        DATA_DIR = Path("/", "content", "drive", "MyDrive", "Kaggle", competiton_name, "input")
         OUTPUT_DIR = DATA_DIR.parents[0] / exp_name
         MODEL_DIR = OUTPUT_DIR / "output_model"
 
