@@ -21,6 +21,7 @@ six = "1.15.0"
 click = "<8.0"
 folium = "0.2.1"
 imgaug = "<0.2.7"
+Jinja2 = "<3.0"
 
 [tool.poetry.dev-dependencies]
 wandb = "^0.12.14"

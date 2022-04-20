@@ -19,12 +19,12 @@ imageio==2.17.0; python_version >= "3.7"
 imgaug==0.2.6
 importlib-metadata==4.2.0; python_version < "3.8" and python_full_version >= "3.7.0" and python_version >= "3.6"
 isort==5.10.1; python_full_version >= "3.6.1" and python_version < "4.0"
-jinja2==3.1.1; python_version >= "3.7"
+jinja2==2.11.3; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0")
 joblib==1.1.0; python_version >= "3.7" and python_full_version >= "3.6.0"
 kaggle==1.5.12
 kiwisolver==1.4.2; python_version >= "3.7"
 markdown==3.0; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.4.0")
-markupsafe==2.1.1; python_version >= "3.7"
+markupsafe==2.1.1; python_version >= "3.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.7"
 matplotlib==3.5.1; python_version >= "3.7"
 mccabe==0.6.1; python_version >= "3.6"
 networkx==2.6.3; python_version >= "3.7"
