@@ -12,7 +12,7 @@ def get_char_probs(texts, predictions, tokenizer):
     results = [np.zeros(len(t)) for t in texts]
     for i, (text, prediction) in enumerate(zip(texts, predictions)):
         encoded = tokenizer(text, add_special_tokens=True, return_offsets_mapping=True)
-        for idx, (offset_mapping, pred) in enumerate(zip(encoded["offset_mapping"], prediction)):
+        for _, (offset_mapping, pred) in enumerate(zip(encoded["offset_mapping"], prediction)):
             start = offset_mapping[0]
             end = offset_mapping[1]
             results[i][start:end] = pred

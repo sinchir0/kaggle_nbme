@@ -8,15 +8,13 @@ class CustomModel(nn.Module):
         super().__init__()
         self.cfg = cfg
         if config_path is None:
-            self.config = AutoConfig.from_pretrained(
-                cfg.model, output_hidden_states=True
-            )
+            self.config = AutoConfig.from_pretrained(cfg.model, output_hidden_states=True)
         else:
             self.config = torch.load(config_path)
         if pretrained:
             self.model = AutoModel.from_pretrained(cfg.model, config=self.config)
         else:
-            self.model = AutoModel(self.config)
+            self.model = AutoModel.from_config(self.config)
         self.fc_dropout = nn.Dropout(cfg.fc_dropout)
         self.fc = nn.Linear(self.config.hidden_size, 1)
         self._init_weights(self.fc)

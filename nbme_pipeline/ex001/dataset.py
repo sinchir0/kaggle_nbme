@@ -19,11 +19,7 @@ def prepare_input(cfg, text, feature_text):
 
 def create_label(cfg, text, annotation_length, location_list):
     encoded = cfg.tokenizer(
-        text,
-        add_special_tokens=True,
-        max_length=cfg.max_len,
-        padding="max_length",
-        return_offsets_mapping=True,
+        text, add_special_tokens=True, max_length=cfg.max_len, padding="max_length", return_offsets_mapping=True,
     )
     offset_mapping = encoded["offset_mapping"]
     ignore_idxes = np.where(np.array(encoded.sequence_ids()) != 0)[0]
@@ -59,17 +55,8 @@ class TrainDataset(Dataset):
         return len(self.feature_texts)
 
     def __getitem__(self, item):
-        # print(self.cfg)
-        # print(self.cfg.tokenizer)  # ここで呼べないのはおかしい
-        inputs = self.prepare_input(
-            self.cfg, self.pn_historys[item], self.feature_texts[item]
-        )
-        label = create_label(
-            self.cfg,
-            self.pn_historys[item],
-            self.annotation_lengths[item],
-            self.locations[item],
-        )
+        inputs = self.prepare_input(self.cfg, self.pn_historys[item], self.feature_texts[item])
+        label = create_label(self.cfg, self.pn_historys[item], self.annotation_lengths[item], self.locations[item],)
         return inputs, label
 
     def prepare_input(self, cfg, text, feature_text):
@@ -84,4 +71,18 @@ class TrainDataset(Dataset):
         for k, v in inputs.items():
             inputs[k] = torch.tensor(v, dtype=torch.long)
 
+        return inputs
+
+
+class TestDataset(Dataset):
+    def __init__(self, cfg, df):
+        self.cfg = cfg
+        self.feature_texts = df["feature_text"].values
+        self.pn_historys = df["pn_history"].values
+
+    def __len__(self):
+        return len(self.feature_texts)
+
+    def __getitem__(self, item):
+        inputs = prepare_input(self.cfg, self.pn_historys[item], self.feature_texts[item])
         return inputs
