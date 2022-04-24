@@ -38,5 +38,5 @@ def search_best_threshold(cfg: CFG, oof: pd.DataFrame) -> Tuple[int, int]:
         if best_score < score:
             best_th = th
             best_score = score
-        cfg._logger.info(f"th: {th}  score: {score:.5f}")
+        cfg.__logger.info(f"th: {th}  score: {score:.5f}")
     return best_th, best_score

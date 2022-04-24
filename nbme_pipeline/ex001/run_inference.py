@@ -9,8 +9,7 @@ from dataset import TestDataset
 from inference import inference_fn, search_best_threshold
 from logger import get_logger
 from model import CustomModel
-from pred import get_predictions
-from score import create_labels_for_scoring, get_char_probs, get_results, get_score
+from score import get_char_probs, get_results
 from set_seed import seed_everything
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
@@ -30,34 +29,34 @@ if __name__ == "__main__":
     seed_everything(seed=42)
 
     # Directory Setting
-    CFG._data_dir, CFG._exp_dir, CFG._output_model_dir = classify_env(
+    CFG.__data_dir, CFG.__exp_dir, CFG.__output_model_dir = classify_env(
         competiton_name=CFG.competition, exp_name=CFG.exp_name
     )
 
     # logger
-    CFG._logger = get_logger()
+    CFG.__logger = get_logger()
 
     # tokenizer
-    CFG.tokenizer = AutoTokenizer.from_pretrained(CFG._exp_dir / "tokenizer")
+    CFG.tokenizer = AutoTokenizer.from_pretrained(CFG.__exp_dir / "tokenizer")
 
     # oof
-    oof = pd.read_pickle(CFG._exp_dir / "oof_df.pkl")
+    oof = pd.read_pickle(CFG.__exp_dir / "oof_df.pkl")
 
     # search best threshold
     best_th, best_score = search_best_threshold(cfg=CFG, oof=oof)
-    CFG._logger.info(f"best_th: {best_th}  score: {best_score:.5f}")
+    CFG.__logger.info(f"best_th: {best_th}  score: {best_score:.5f}")
 
     # data loading
-    test = pd.read_csv(CFG._data_dir / "test.csv")
-    submission = pd.read_csv(CFG._data_dir / "sample_submission.csv")
-    features = pd.read_csv(CFG._data_dir / "features.csv")
+    test = pd.read_csv(CFG.__data_dir / "test.csv")
+    submission = pd.read_csv(CFG.__data_dir / "sample_submission.csv")
+    features = pd.read_csv(CFG.__data_dir / "features.csv")
 
     def preprocess_features(features: pd.DataFrame) -> pd.DataFrame:
         features.loc[27, "feature_text"] = "Last-Pap-smear-1-year-ago"
         return features
 
     features = preprocess_features(features)
-    patient_notes = pd.read_csv(CFG._data_dir / "patient_notes.csv")
+    patient_notes = pd.read_csv(CFG.__data_dir / "patient_notes.csv")
 
     test = test.merge(features, on=["feature_num", "case_num"], how="left")
     test = test.merge(patient_notes, on=["pn_num", "case_num"], how="left")
@@ -74,9 +73,9 @@ if __name__ == "__main__":
     predictions = []
 
     for fold in CFG.trn_fold:
-        model = CustomModel(cfg=CFG, config_path=CFG._output_model_dir / "config.pth", pretrained=False)
+        model = CustomModel(cfg=CFG, config_path=CFG.__output_model_dir / "config.pth", pretrained=False)
         state = torch.load(
-            CFG._output_model_dir / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
+            CFG.__output_model_dir / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
             map_location=torch.device("cpu"),
         )
         model.load_state_dict(state["model"])
@@ -93,4 +92,4 @@ if __name__ == "__main__":
     # submission
     results = get_results(predictions, th=best_th)
     submission["location"] = results
-    submission[["id", "location"]].to_csv(CFG._exp_dir / f"{CFG.exp_name}_submission.csv", index=False)
+    submission[["id", "location"]].to_csv(CFG.__exp_dir / f"{CFG.exp_name}_submission.csv", index=False)
