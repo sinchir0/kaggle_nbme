@@ -6,7 +6,7 @@ import torch
 from classify_env import classify_env
 from config import CFG
 from dataset import TestDataset
-from inference import inference_fn
+from inference import inference_fn, search_best_threshold
 from logger import get_logger
 from model import CustomModel
 from pred import get_predictions
@@ -44,19 +44,7 @@ if __name__ == "__main__":
     oof = pd.read_pickle(CFG._exp_dir / "oof_df.pkl")
 
     # search best threshold
-    truths = create_labels_for_scoring(oof)
-    char_probs = get_char_probs(oof["pn_history"].values, oof[[i for i in range(CFG.max_len)]].values, CFG.tokenizer)
-    best_th = 0.5
-    best_score = 0.0
-    for th in np.arange(0.40, 0.60, 0.01):  # TODO: ここの探索範囲を広げても良いかも
-        th = np.round(th, 2)
-        results = get_results(char_probs, th=th)
-        preds = get_predictions(results)
-        score = get_score(preds, truths)
-        if best_score < score:
-            best_th = th
-            best_score = score
-        CFG._logger.info(f"th: {th}  score: {score:.5f}")
+    best_th, best_score = search_best_threshold(cfg=CFG, oof=oof)
     CFG._logger.info(f"best_th: {best_th}  score: {best_score:.5f}")
 
     # data loading
