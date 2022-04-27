@@ -13,7 +13,6 @@ from pred import get_predictions
 from score import create_labels_for_scoring, get_char_probs, get_results, get_score
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
-from tqdm import tqdm
 from transformers import get_cosine_schedule_with_warmup, get_linear_schedule_with_warmup
 
 
@@ -44,7 +43,7 @@ def train_fn(fold, train_loader, model, criterion, optimizer, epoch, scheduler, 
             global_step += 1
             if CFG.batch_scheduler:
                 scheduler.step()
-        end = time.time()
+        # end = time.time()
         if step % CFG.print_freq == 0 or step == (len(train_loader) - 1):
             print(
                 "Epoch: [{0}][{1}/{2}] "
