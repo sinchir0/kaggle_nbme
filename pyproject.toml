@@ -23,6 +23,7 @@ folium = "0.2.1"
 imgaug = "<0.2.7"
 Jinja2 = "<3.0"
 sentencepiece = "^0.1.96"
+wandb = "^0.12.15"
 
 [tool.poetry.dev-dependencies]
 wandb = "^0.12.14"

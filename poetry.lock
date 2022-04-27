@@ -84,7 +84,7 @@ python-versions = ">=3.6"
 name = "docker-pycreds"
 version = "0.4.0"
 description = "Python bindings for the docker credentials store API"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -153,7 +153,7 @@ woff = ["zopfli (>=0.1.4)", "brotlicffi (>=0.8.0)", "brotli (>=1.0.1)"]
 name = "gitdb"
 version = "4.0.9"
 description = "Git Object Database"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -164,7 +164,7 @@ smmap = ">=3.0.1,<6"
 name = "gitpython"
 version = "3.1.27"
 description = "GitPython is a python library used to interact with Git repositories"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -436,7 +436,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 name = "pathtools"
 version = "0.1.2"
 description = "File system general utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -456,7 +456,7 @@ tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "pa
 name = "promise"
 version = "2.3"
 description = "Promises/A+ implementation for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -470,7 +470,7 @@ test = ["pytest (>=2.7.3)", "pytest-cov", "coveralls", "futures", "pytest-benchm
 name = "protobuf"
 version = "3.20.0"
 description = "Protocol Buffers"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -478,7 +478,7 @@ python-versions = ">=3.7"
 name = "psutil"
 version = "5.9.0"
 description = "Cross-platform lib for process and system monitoring in Python."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
@@ -672,7 +672,7 @@ python-versions = "*"
 name = "sentry-sdk"
 version = "1.5.10"
 description = "Python client for Sentry (https://sentry.io)"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -702,7 +702,7 @@ tornado = ["tornado (>=5)"]
 name = "setproctitle"
 version = "1.2.3"
 description = "A Python module to customize the process title"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -729,7 +729,7 @@ toml = ["setuptools (>=42)"]
 name = "shortuuid"
 version = "1.0.8"
 description = "A generator library for concise, unambiguous and URL-safe UUIDs."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 
@@ -745,7 +745,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "smmap"
 version = "5.0.0"
 description = "A pure Python implementation of a sliding window memory map manager"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -931,9 +931,9 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.12.14"
+version = "0.12.15"
 description = "A CLI and library for interacting with the Weights and Biases API."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -978,7 +978,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7.10"
-content-hash = "337644aa605b1fe761047405363ee72f6d6d37b37c1cdd3071f6819024900f1e"
+content-hash = "69d508cfa129f3ebb7749fe9f14310ef3140d41b94c93d8fd7d08fb295510e30"
 
 [metadata.files]
 appdirs = [
@@ -1908,8 +1908,8 @@ urllib3 = [
     {file = "urllib3-1.25.11.tar.gz", hash = "sha256:8d7eaa5a82a1cac232164990f04874c594c9453ec55eef02eab885aa02fc17a2"},
 ]
 wandb = [
-    {file = "wandb-0.12.14-py2.py3-none-any.whl", hash = "sha256:2bc25af123d98279acd2cdecf1c2911b1d0f456393fc3eebb0e5c199607c7f9a"},
-    {file = "wandb-0.12.14.tar.gz", hash = "sha256:15a6da8739ed098841dff3074dc8edcb818e118e7ded1649c183d158e212fe2d"},
+    {file = "wandb-0.12.15-py2.py3-none-any.whl", hash = "sha256:45f8e80894d3351d4bdc722f5614bce7c00f45b8be341d8577323f6ccf580078"},
+    {file = "wandb-0.12.15.tar.gz", hash = "sha256:c601b80a7792902e2566fba3fcc0ff60b8d8de1fad984ebeadac07ed908696f1"},
 ]
 zipp = [
     {file = "zipp-3.8.0-py3-none-any.whl", hash = "sha256:c4f6e5bbf48e74f7a38e7cc5b0480ff42b0ae5178957d564d18932525d5cf099"},
