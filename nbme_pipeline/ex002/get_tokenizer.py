@@ -3,6 +3,7 @@ import shutil
 from pathlib import Path, PosixPath
 
 import transformers
+from transformers import AutoTokenizer
 
 
 def copy_tokenizer(output_dir: PosixPath) -> None:
@@ -37,9 +38,10 @@ def copy_tokenizer(output_dir: PosixPath) -> None:
 
 def get_tokenizer(model_name: str, output_dir: PosixPath):
     # DebertaV2TokenizerFastを使うためのコードを利用しているpythonのsite-packages/transformers配下にコピーする
-    copy_tokenizer(output_dir)
+    copy_tokenizer(output_dir=output_dir)
     from transformers.models.deberta_v2 import DebertaV2TokenizerFast
 
     tokenizer = DebertaV2TokenizerFast.from_pretrained(model_name)
+    # tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.save_pretrained(output_dir / "tokenizer")
     return tokenizer

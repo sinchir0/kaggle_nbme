@@ -21,14 +21,14 @@ from train import train_loop
 if __name__ == "__main__":
 
     # Directory Setting
-    CFG.__data_dir, CFG.__output_dir, CFG.__model_dir = classify_env(
+    CFG.__data_dir, CFG.__output_dir, CFG.__file_dir = classify_env(
         competiton_name=CFG.competition, exp_name=CFG.exp_name
     )
 
-    if not os.path.exists(CFG.__model_dir):
+    if not os.path.exists(CFG.__output_dir):
         os.makedirs(CFG.__output_dir, exist_ok=True)
 
-    if not os.path.exists(CFG.__model_dir / "output_model"):
+    if not os.path.exists(CFG.__output_dir / "output_model"):
         os.makedirs(CFG.__output_dir / "output_model", exist_ok=True)
 
     # dubug
