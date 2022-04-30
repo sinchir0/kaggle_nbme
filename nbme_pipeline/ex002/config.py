@@ -10,10 +10,7 @@ class CFG:
     apex = True
     print_freq = 100
     num_workers = 0  # 4 # 1か４にすると、AttributeError: type object 'CFG' has no attribute 'tokenizer'が発生する
-    # model = "microsoft/deberta-v2-xxlarge"
-    # model = "microsoft/deberta-xlarge"
-    model = "microsoft/deberta-large"
-    # model = "microsoft/deberta-base"
+    model = "microsoft/deberta-v3-large"
     scheduler = "cosine"  # ['linear', 'cosine']
     batch_scheduler = True
     num_cycles = 0.5

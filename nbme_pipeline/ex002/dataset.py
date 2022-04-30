@@ -73,7 +73,7 @@ class TrainDataset(Dataset):
         #     for k, v in inputs.items():
         #         inputs[k] = torch.tensor(v, dtype=torch.long)
 
-        return inputs
+        # return inputs
 
 
 class TestDataset(Dataset):

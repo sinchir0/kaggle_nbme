@@ -110,7 +110,7 @@ def train_loop(folds, fold, CFG):
     train_folds = folds[folds["fold"] != fold].reset_index(drop=True)
     valid_folds = folds[folds["fold"] == fold].reset_index(drop=True)
     valid_texts = valid_folds["pn_history"].values
-    valid_labels = create_labels_for_scoring(valid_folds)  # ここでlocation_for_create_labels列rが追加されるのは気になる
+    valid_labels = create_labels_for_scoring(valid_folds)  # ここでlocation_for_create_labels列が追加されるのは気になる
 
     train_dataset = TrainDataset(CFG, train_folds)
     valid_dataset = TrainDataset(CFG, valid_folds)
