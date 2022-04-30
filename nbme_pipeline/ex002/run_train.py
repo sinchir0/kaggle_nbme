@@ -72,7 +72,7 @@ if __name__ == "__main__":
         train = train.sample(n=10, random_state=0).reset_index(drop=True)
 
     # tokenizer
-    CFG.tokenizer = get_tokenizer(model_name=CFG.model, output_dir=CFG.__output_dir)
+    CFG.tokenizer = get_tokenizer(model_name=CFG.model, output_dir=CFG.__output_dir, file_dir=CFG.__file_dir)
 
     # Define max_len
     if CFG.debug:

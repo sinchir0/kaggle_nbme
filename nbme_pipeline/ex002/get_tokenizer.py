@@ -6,11 +6,11 @@ import transformers
 from transformers import AutoTokenizer
 
 
-def copy_tokenizer(output_dir: PosixPath) -> None:
+def copy_tokenizer(file_dir: PosixPath) -> None:
 
     transformers_path = Path(transformers.__file__).parent
 
-    input_dir = Path(output_dir / "deberta-v2-3-fast-tokenizer")
+    input_dir = Path(file_dir / "deberta-v2-3-fast-tokenizer")
 
     convert_file = input_dir / "convert_slow_tokenizer.py"
     conversion_path = transformers_path / convert_file.name
@@ -36,9 +36,9 @@ def copy_tokenizer(output_dir: PosixPath) -> None:
     # importlib.reload(transformers)
 
 
-def get_tokenizer(model_name: str, output_dir: PosixPath):
+def get_tokenizer(model_name: str, output_dir: PosixPath, file_dir: PosixPath):
     # DebertaV2TokenizerFastを使うためのコードを利用しているpythonのsite-packages/transformers配下にコピーする
-    copy_tokenizer(output_dir=output_dir)
+    copy_tokenizer(file_dir=file_dir)
     from transformers.models.deberta_v2 import DebertaV2TokenizerFast
 
     tokenizer = DebertaV2TokenizerFast.from_pretrained(model_name)
