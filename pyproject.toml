@@ -24,6 +24,8 @@ Jinja2 = "<3.0"
 sentencepiece = "^0.1.96"
 wandb = "^0.12.15"
 transformers = "4.16.2"
+datasets = "^2.1.0"
+accelerate = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
 wandb = "^0.12.14"
