@@ -42,22 +42,12 @@ if __name__ == "__main__":
 
     # load data
 
-    # patient_notes = pd.read_csv(CFG.__data_dir / "patient_notes.csv")
     mimic_data = pd.read_csv(CFG.__data_dir / "MIMIC-III-Final.csv")
 
     if CFG.debug:
-        # patient_notes = patient_notes.sample(n=10, random_state=0).reset_index(drop=True)
         mimic_data = mimic_data.sample(n=10, random_state=0).reset_index(drop=True)
     else:
-        mimic_data = mimic_data.sample(n=10000, random_state=0).reset_index(drop=True)
-
-    # mlm_data = patient_notes[["pn_history"]]
-    # mlm_data = mlm_data.rename(columns={"pn_history": "text"})
-    # mlm_data.to_csv(CFG.__output_dir / "mlm_data.csv", index=False)
-
-    # mlm_data_val = patient_notes[["pn_history"]]
-    # mlm_data_val = mlm_data_val.rename(columns={"pn_history": "text"})
-    # mlm_data_val.to_csv(CFG.__output_dir / "mlm_data_val.csv", index=False)
+        mimic_data = mimic_data.sample(n=3000, random_state=0).reset_index(drop=True)
 
     mlm_data = mimic_data[["TEXT"]]
     mlm_data = mlm_data.rename(columns={"TEXT": "text"})
