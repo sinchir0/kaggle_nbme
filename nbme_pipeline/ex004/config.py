@@ -32,3 +32,4 @@ class CFG:
     n_fold = 5
     trn_fold = [0, 1, 2, 3, 4]
     train = True
+    pretrained_model_path = Path(__file__).parents[0] / "output"
