@@ -102,7 +102,7 @@ def valid_fn(valid_loader, model, criterion, CFG):
 # CFGはtrain_loopの中でののみ利用する
 def train_loop(folds, fold, CFG):
 
-    CFG.__logger.info(f"========== fold: {fold} training ==========")
+    CFG._logger.info(f"========== fold: {fold} training ==========")
 
     # ====================================================
     # loader
@@ -137,7 +137,7 @@ def train_loop(folds, fold, CFG):
     # model & optimizer
     # ====================================================
     model = CustomModel(CFG, config_path=None, pretrained=True)
-    torch.save(model.config, (CFG.__output_dir / "output_model" / "config.pth"))
+    torch.save(model.config, (CFG._output_dir / "output_model" / "config.pth"))
     model.to(CFG.device)
 
     def get_optimizer_params(model, encoder_lr, decoder_lr, weight_decay=0.0):
@@ -213,10 +213,10 @@ def train_loop(folds, fold, CFG):
 
         elapsed = time.time() - start_time
 
-        CFG.__logger.info(
+        CFG._logger.info(
             f"Epoch {epoch+1} - avg_train_loss: {avg_loss:.4f}  avg_val_loss: {avg_val_loss:.4f}  time: {elapsed:.0f}s"
         )
-        CFG.__logger.info(f"Epoch {epoch+1} - Score: {score:.4f}")
+        CFG._logger.info(f"Epoch {epoch+1} - Score: {score:.4f}")
         if CFG.wandb:
             wandb.log(
                 {
@@ -229,14 +229,14 @@ def train_loop(folds, fold, CFG):
 
         if (best_score < score) | (CFG.debug):
             best_score = score
-            CFG.__logger.info(f"Epoch {epoch+1} - Save Best Score: {best_score:.4f} Model")
+            CFG._logger.info(f"Epoch {epoch+1} - Save Best Score: {best_score:.4f} Model")
             torch.save(
                 {"model": model.state_dict(), "predictions": predictions},
-                CFG.__output_dir / "output_model" / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
+                CFG._output_dir / "output_model" / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
             ),
 
     predictions = torch.load(
-        CFG.__output_dir / "output_model" / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
+        CFG._output_dir / "output_model" / f"{CFG.model.replace('/', '-')}_fold{fold}_best.pth",
         map_location=torch.device("cpu"),
     )["predictions"]
     # valid_folds[[i for i in range(CFG.max_len)]] = predictions

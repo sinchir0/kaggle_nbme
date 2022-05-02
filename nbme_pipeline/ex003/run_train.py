@@ -21,12 +21,10 @@ from train import train_loop
 if __name__ == "__main__":
 
     # Directory Setting
-    CFG.__data_dir, CFG.__output_dir, CFG.__file_dir = classify_env(
-        competiton_name=CFG.competition, exp_name=CFG.exp_name
-    )
+    CFG._data_dir, CFG._output_dir, CFG._file_dir = classify_env(competiton_name=CFG.competition, exp_name=CFG.exp_name)
 
-    if not Path.exists(CFG.__output_dir / "output_model"):
-        Path.mkdir(CFG.__output_dir / "output_model", parents=True, exist_ok=True)
+    if not Path.exists(CFG._output_dir / "output_model"):
+        Path.mkdir(CFG._output_dir / "output_model", parents=True, exist_ok=True)
 
     # dubug
     if CFG.debug:
@@ -42,15 +40,15 @@ if __name__ == "__main__":
     print(f"transformers.__version__: {transformers.__version__}")
 
     CFG.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    CFG.__logger = get_logger()
+    CFG._logger = get_logger()
 
     # fix seed
     seed_everything(seed=42)
 
     # Data Loading
-    train = pd.read_csv(CFG.__data_dir / "train.csv")
-    features = pd.read_csv(CFG.__data_dir / "features.csv")
-    patient_notes = pd.read_csv(CFG.__data_dir / "patient_notes.csv")
+    train = pd.read_csv(CFG._data_dir / "train.csv")
+    features = pd.read_csv(CFG._data_dir / "features.csv")
+    patient_notes = pd.read_csv(CFG._data_dir / "patient_notes.csv")
 
     # Preprocess
     train = preprocess_train(train)
@@ -69,7 +67,7 @@ if __name__ == "__main__":
         train = train.sample(n=10, random_state=0).reset_index(drop=True)
 
     # tokenizer
-    CFG.tokenizer = get_tokenizer(model_name=CFG.model, output_dir=CFG.__output_dir, file_dir=CFG.__file_dir)
+    CFG.tokenizer = get_tokenizer(model_name=CFG.model, output_dir=CFG._output_dir, file_dir=CFG._file_dir)
 
     # Define max_len
     if CFG.debug:
@@ -78,7 +76,7 @@ if __name__ == "__main__":
         pn_history_lengths = calc_length(patient_notes, "pn_history", CFG.tokenizer)
         feature_text_lengths = calc_length(features, "feature_text", CFG.tokenizer)
         CFG.max_len = max(pn_history_lengths) + max(feature_text_lengths) + 3  # cls & sep & sep
-    CFG.__logger.info(f"max_len: {CFG.max_len}")
+    CFG._logger.info(f"max_len: {CFG.max_len}")
 
     # train
     if CFG.train:
@@ -88,17 +86,17 @@ if __name__ == "__main__":
                 _oof_df = train_loop(folds=train, fold=fold, CFG=CFG,)
                 oof_df = pd.concat([oof_df, _oof_df])
                 # Save fold result
-                CFG.__logger.info(f"========== fold: {fold} result ==========")
+                CFG._logger.info(f"========== fold: {fold} result ==========")
                 get_result(
-                    oof_df=_oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG.__logger,
+                    oof_df=_oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG._logger,
                 )
         # Save CV result
         oof_df = oof_df.reset_index(drop=True)
-        CFG.__logger.info("========== CV ==========")
+        CFG._logger.info("========== CV ==========")
         get_result(
-            oof_df=oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG.__logger,
+            oof_df=oof_df, max_len=CFG.max_len, tokenizer=CFG.tokenizer, logger=CFG._logger,
         )
-        oof_df.to_pickle(CFG.__output_dir / "oof_df.pkl")
+        oof_df.to_pickle(CFG._output_dir / "oof_df.pkl")
 
     # finish wandb
     if CFG.wandb:
