@@ -13,7 +13,7 @@ class CustomModel(nn.Module):
             self.config = torch.load(config_path)
         if pretrained:
             # self.model = AutoModel.from_pretrained(cfg.model, config=self.config)
-            self.model = AutoModel.from_pretrained(cfg.pretrained_model_path, local_files_only=True)
+            self.model = AutoModel.from_pretrained(cfg._output_dir / "output", local_files_only=True)
         else:
             self.model = AutoModel.from_config(self.config)
         self.fc_dropout = nn.Dropout(cfg.fc_dropout)
